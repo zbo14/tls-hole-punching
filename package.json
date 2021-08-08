@@ -1,17 +1,27 @@
 {
   "name": "tls-hole-punching",
   "version": "0.0.1",
-  "description": "",
+  "description": "TCP hole-punching demo with TLS for direct, reliable, and secure peer-to-peer communication",
   "main": "src/main.js",
   "scripts": {
     "build": "node-gyp build",
+    "hello-node": "node src/main.js",
+    "hello-python": "python3 src/main.py",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zbo14/tls-hole-punching.git"
   },
-  "keywords": [],
+  "keywords": [
+    "TCP",
+    "TLS",
+    "hole-punching",
+    "networking",
+    "p2p",
+    "peer-to-peer",
+    "sockets"
+  ],
   "author": "Zachary Balder",
   "gypfile": true,
   "license": "ISC",
