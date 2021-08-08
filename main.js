@@ -5,13 +5,17 @@ const fs = require('fs')
 const net = require('net')
 const path = require('path')
 const tls = require('tls')
+const addon = require('bindings')('socket')
 
 const privateDir = path.join(__dirname, 'private')
 
 const main = async () => {
   const remoteIp = process.argv[2].trim()
   const isServer = (process.argv[3] || '').trim().toLowerCase() === 'true'
-  const sock = net.connect(54312, remoteIp)
+  const fd = addon.bindSocket(54312)
+  const sock = new net.Socket({ fd, readable: true, writable: true })
+
+  sock.connect(54312, remoteIp)
 
   await EventEmitter.once(sock, 'connect')
 

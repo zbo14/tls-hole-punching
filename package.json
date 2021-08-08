@@ -1,0 +1,24 @@
+{
+  "name": "tls-hole-punching",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zbo14/tls-hole-punching.git"
+  },
+  "keywords": [],
+  "author": "Zachary Balder",
+  "gypfile": true,
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zbo14/tls-hole-punching/issues"
+  },
+  "homepage": "https://github.com/zbo14/tls-hole-punching#readme",
+  "dependencies": {
+    "bindings": "^1.5.0"
+  }
+}
