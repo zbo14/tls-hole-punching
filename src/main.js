@@ -40,7 +40,7 @@ const main = async () => {
     })
   }
 
-  let data
+  let data = ''
 
   tlsSock
     .on('data', chunk => {
