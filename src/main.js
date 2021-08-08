@@ -40,12 +40,17 @@ const main = async () => {
     })
   }
 
-  const writeStream = fs.createWriteStream(path.join(privateDir, 'chat.txt'))
+  let data
 
-  process.stdin
-    .setEncoding('utf8')
-    .pipe(tlsSock)
-    .pipe(writeStream)
+  tlsSock
+    .on('data', chunk => {
+      data += chunk
+    })
+    .end('hello world')
+
+  await EventEmitter.once(tlsSock, 'end')
+
+  console.log(data)
 }
 
 main().catch(err => {
