@@ -7,7 +7,7 @@ const path = require('path')
 const tls = require('tls')
 const addon = require('bindings')('socket')
 
-const privateDir = path.join(__dirname, 'private')
+const privateDir = path.resolve(__dirname, '..', 'private')
 
 const main = async () => {
   const remoteIp = process.argv[2].trim()
@@ -40,11 +40,12 @@ const main = async () => {
     })
   }
 
-  tlsSock
+  const writeStream = fs.createWriteStream(path.join(privateDir, 'chat.txt'))
+
+  process.stdin
     .setEncoding('utf8')
-    .on('data', console.log)
-    .on('error', console.error)
-    .write('hello world')
+    .pipe(tlsSock)
+    .pipe(writeStream)
 }
 
 main().catch(err => {

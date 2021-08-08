@@ -19,7 +19,9 @@ proto = ssl.PROTOCOL_TLS_SERVER if server_side else ssl.PROTOCOL_TLS_CLIENT
 context = ssl.SSLContext(proto)
 
 if server_side:
-    private_dir = os.path.join(os.path.dirname(__file__), 'private')
+    private_dir = os.path.normpath(
+        os.path.join(os.path.dirname(__file__), '..', 'private')
+    )
 
     context.load_cert_chain(
         os.path.join(private_dir, 'cert.pem'),

@@ -2,7 +2,7 @@
   "targets": [
     {
       "target_name": "socket",
-      "sources": ["socket.c"]
+      "sources": ["src/socket.c"]
     }
   ]
 }
