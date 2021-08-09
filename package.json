@@ -4,6 +4,7 @@
   "description": "TCP hole-punching demo with TLS for direct, reliable, and secure peer-to-peer communication",
   "main": "src/main.js",
   "scripts": {
+    "postinstall": "bash scripts/generate-cert.sh",
     "build": "node-gyp build",
     "hello-node": "node src/main.js",
     "hello-python": "python3 src/main.py",
