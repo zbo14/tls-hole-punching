@@ -22,6 +22,10 @@ static int _bind_socket(napi_env env, napi_callback_info info) {
     return sockfd;
   }
 
+  int optval = 1;
+  setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
+  setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
+
   struct sockaddr_in srcaddr;
   memset(&srcaddr, 0, sizeof(srcaddr));
 

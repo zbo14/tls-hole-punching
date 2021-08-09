@@ -3,40 +3,46 @@ import socket
 import ssl
 import sys
 
-remote_ip = sys.argv[1].strip()
+def main():
+    remote_ip = sys.argv[1].strip()
 
-try:
-    server_side = (sys.argv[2].strip().lower() or '') == 'true'
-except IndexError:
-    server_side = False
+    try:
+        server_side = (sys.argv[2].strip().lower() or '') == 'true'
+    except IndexError:
+        server_side = False
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-sock.bind(('', 54312))
-sock.connect((remote_ip, 54312))
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 
-proto = ssl.PROTOCOL_TLS_SERVER if server_side else ssl.PROTOCOL_TLS_CLIENT
-context = ssl.SSLContext(proto)
+    sock.bind(('', 54312))
+    sock.connect((remote_ip, 54312))
 
-if server_side:
-    private_dir = os.path.normpath(
-        os.path.join(os.path.dirname(__file__), '..', 'private')
-    )
+    proto = ssl.PROTOCOL_TLS_SERVER if server_side else ssl.PROTOCOL_TLS_CLIENT
+    context = ssl.SSLContext(proto)
 
-    context.load_cert_chain(
-        os.path.join(private_dir, 'cert.pem'),
-        os.path.join(private_dir, 'key.pem')
-    )
+    if server_side:
+        private_dir = os.path.normpath(
+            os.path.join(os.path.dirname(__file__), '..', 'private')
+        )
 
-else:
-    context.check_hostname = False
-    context.verify_mode = ssl.CERT_NONE
+        context.load_cert_chain(
+            os.path.join(private_dir, 'cert.pem'),
+            os.path.join(private_dir, 'key.pem')
+        )
 
-tls_sock = context.wrap_socket(sock=sock, server_side=server_side)
+    else:
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
 
-tls_sock.send(b'hello world')
-msg = tls_sock.recv(11)
+    tls_sock = context.wrap_socket(sock=sock, server_side=server_side)
 
-print(msg.decode())
+    tls_sock.send(b'hello world')
+    msg = tls_sock.recv(11)
 
-sock.close()
+    print(msg.decode())
+
+    sock.close()
+
+main()
