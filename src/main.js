@@ -30,14 +30,10 @@ const main = async () => {
     tlsSock = new tls.TLSSocket(sock, {
       isServer,
       cert,
-      key,
-      rejectUnauthorized: false
+      key
     })
   } else {
-    tlsSock = new tls.TLSSocket(sock, {
-      isServer,
-      rejectUnauthorized: false
-    })
+    tlsSock = new tls.TLSSocket(sock, { rejectUnauthorized: false })
   }
 
   let data = ''
